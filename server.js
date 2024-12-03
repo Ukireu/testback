@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 
@@ -19,10 +20,10 @@ app.use(bodyParser.json());
 
 // MySQL 연결 설정
 const db = mysql.createConnection({
-  host: 'museon.leenux.kr',
-  user: 'museon',
-  password: 'pblabwmdhs@',
-  database: 'museon',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 // 데이터베이스 연결
@@ -93,7 +94,7 @@ app.post('/login', (req, res) => {
 });
 
 // 서버 실행
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // 클라우드타입에서 PORT 제공
 app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
 });
